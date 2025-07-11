@@ -29,7 +29,7 @@ apiClient.interceptors.response.use((response)=> response,
         if(error.response && error.response.status ===456 && ! originalReguest._retry){
             originalReguest._retry = true;
             try{
-                const response = await axios.post("/api/reissue", null , {
+                const response = await axios.post("/reissue", null , {
                     withCredentials:true,
                 });
 
