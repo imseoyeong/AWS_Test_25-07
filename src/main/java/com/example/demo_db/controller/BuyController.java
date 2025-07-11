@@ -25,7 +25,7 @@ public class BuyController {
         return ResponseEntity.status(HttpStatus.OK).body(buyDTOList);
     }
 
-    @PostMapping(value="")
+    @PostMapping(value="/new")
     public ResponseEntity<BuyDTO> addBuyInfo(@Valid @RequestBody BuyDTO buyDTO) {
         BuyDTO saveBuyDTO=this.buyService.saveBuyInfo(buyDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(saveBuyDTO);

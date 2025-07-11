@@ -1,7 +1,9 @@
 package com.example.demo_db.service;
 
+import com.example.demo_db.data.dao.AuthenDAO;
 import com.example.demo_db.data.dao.UserDAO;
 import com.example.demo_db.data.dto.UserDTO;
+import com.example.demo_db.data.entity.AuthenEntity;
 import com.example.demo_db.data.entity.UserEntity;
 import com.example.demo_db.exception.DuplicateIdException;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,6 +19,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserDAO userDAO;
+    private final AuthenDAO authenDAO;
+
 
     public List<UserDTO> searchUserInfo(String addr){
         List<UserEntity> userEntityList=this.userDAO.searchUserInfo(addr);
@@ -84,9 +88,12 @@ public class UserService {
                     .height(saveUserEntity.getHeight())
                     .joinDate(saveUserEntity.getJoinDate())
                     .build();
+
+            AuthenEntity authenEntity=this.authenDAO.saveAuthen(userDTO.getUserId(), userDTO.getPassword(), "ROLE_USER");
+
             return saveUserDTO;
         }
-        throw new DuplicateIdException("아이디가 중복되었습니다.");
+         throw new DuplicateIdException("아이디가 중복되었습니다.");
     }
 
     public boolean existUserId(String userId) {
